@@ -96,11 +96,31 @@ python manage.py runserver
 
 ## 🧑‍💻 Usage
 
-1. Start the Django backend:  
-   ```bash
-   python manage.py runserver
-   ```
-2. Open browser at http://127.0.0.1:8000/
+### 1. Run **initialize.py** to fetch all government scheme data
+```bash
+python initialize.py
+```
+This will create/update `schemeData.json` with the latest schemes.
+
+---
+
+### 2. Run **rag.py** to preprocess, chunk, and upsert data into Pinecone
+```bash
+python rag.py
+```
+This will generate `rag.jsonl` and insert scheme chunks into the Pinecone vector database.
+
+---
+
+### 3. Start the Django chatbot server
+```bash
+python manage.py runserver
+```
+<<<<<<< Updated upstream
+Then open your browser at [http://127.0.0.1:8000/](http://127.0.0.1:8000/) 🎉
+=======
+Then open your browser at http://127.0.0.1:8000/
+>>>>>>> Stashed changes
 
 ---
 
