@@ -116,7 +116,11 @@ This will generate `rag.jsonl` and insert scheme chunks into the Pinecone vector
 ```bash
 python manage.py runserver
 ```
+<<<<<<< Updated upstream
 Then open your browser at [http://127.0.0.1:8000/](http://127.0.0.1:8000/) 🎉
+=======
+Then open your browser at http://127.0.0.1:8000/
+>>>>>>> Stashed changes
 
 ---
 
