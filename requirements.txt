@@ -1,0 +1,14 @@
+django==4.2.25
+pinecone==7.3.0
+huggingface-hub==0.35.3
+ollama==0.6.0
+markdown2==2.5.4
+requests==2.32.5
+pandas==2.3.3
+numpy==2.0.2
+scikit-learn==1.5.2
+matplotlib==3.9.2
+seaborn==0.13.2
+tiktoken==0.11.0
+python-slugify==8.0.4 
+orjson==3.11.3
