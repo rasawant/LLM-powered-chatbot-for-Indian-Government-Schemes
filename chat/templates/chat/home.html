@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root {
+          --bg: #f6f7f9;
+          --card: #ffffff;
+          --text: #111827;
+          --muted: #6b7280;
+          --ring: #3b82f6;
+        }
+        @media (prefers-color-scheme: dark) {
+          :root {
+            --bg: #0b0f14;
+            --card: #121821;
+            --text: #e5e7eb;
+            --muted: #9ca3af;
+            --ring: #60a5fa;
+          }
+        }
+        html, body {
+          height: 100%;
+          margin: 0;
+          background: var(--bg);
+          color: var(--text);
+          font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        }
+        .center {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          min-height: 100%;
+          padding: 0px;
+        }
+        .card {
+          width: min(640px, 92vw);
+          background: var(--card);
+          border-radius: 16px;
+          box-shadow:
+            0 10px 20px rgba(0,0,0,0.06),
+            0 6px 6px rgba(0,0,0,0.04);
+          padding: 28px;
+        }
+        #main_title{
+          margin: 0 0 10px 0;
+          letter-spacing: 1px;
+          font-size:50px; 
+          font: weight 900px; 
+          background: linear-gradient(to right, #FF9933 0%,rgb(211, 209, 209) 50%, #138808 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        #tag{
+            align-items: center;
+            justify-content: center;
+        }
+        p {
+          margin: 0 0 16px 0;
+          color: var(--muted);
+          font-size: 14px;
+        }
+        .row {
+          display: flex;
+          gap: 10px;
+        }
+        input[type="text"] {
+          flex: 1;
+          padding: 12px 14px;
+          font-size: 16px;
+          color: var(--text);
+          background: transparent;
+          border: 1.5px solid rgba(100,116,139,0.35);
+          border-radius: 12px;
+          outline: none;
+          transition: border-color 150ms, box-shadow 150ms;
+        }
+        input[type="text"]:focus {
+          border-color: var(--ring);
+          box-shadow: 0 0 0 4px color-mix(in srgb, var(--ring) 20%, transparent);
+        }
+        button {
+          padding: 12px 16px;
+          border: none;
+          border-radius: 12px;
+          background: var(--ring);
+          color: white;
+          font-size: 15px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: transform 120ms ease, filter 120ms ease;
+        }
+        #title{
+            margin-bottom: 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        button:hover { filter: brightness(1.05); }
+        button:active { transform: translateY(1px); }
+    </style>
+</head>
+<body>
+    <main class="center">
+        <div id="title">
+            <h1 id="main_title">Government of India</h1>
+            <h2 id="tag">People Welfare Scheme</h2>
+        </div>
+        
+        <section class="card" role="region" aria-labelledby="title">
+
+          <div id="chat-history">
+            {% for msg in history %}
+              <div class="message {{ msg.role }}">
+                {% if msg.role == "user" %}
+                  {{ msg.text }}
+                {% else %}
+                  {{ msg.text|safe }} 
+                {% endif %}
+              </div>
+            {% empty %}
+              <p style="color: var(--muted);">Start by asking a question about government schemes.</p>
+            {% endfor %}
+          </div>
+
+          <form class="row" method="post">
+            {% csrf_token %}
+            {{ form.query }}
+            <button type="submit">Go</button>
+          </form>
+          
+        </section>
+      </main>
+</body>
+</html>

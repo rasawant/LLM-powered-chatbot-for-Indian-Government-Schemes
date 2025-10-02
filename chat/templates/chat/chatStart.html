@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Django Chat</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+    .messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .bubble {
+      padding: 10px 14px;
+      border-radius: 16px;
+      margin: 6px 0;
+      max-width: 75%;
+      word-wrap: break-word;
+    }
+    .user {
+      background: #dbeafe;
+      align-self: flex-end;
+    }
+    .bot {
+      background: #f1f1f1;
+      align-self: flex-start;
+    }
+    .input-box {
+      padding: 10px;
+      border-top: 1px solid #ddd;
+      background: #fff;
+      display: flex;
+      gap: 10px;
+    }
+    .input-box input[type=text] {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+    .input-box button {
+      padding: 12px 18px;
+      border: none;
+      border-radius: 10px;
+      background: #0b5fff;
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    .input-box button:hover {
+      background: #004ad6;
+    }
+    /* ⭐ Loading dots animation */
+    .loading-dots {
+      display: inline-block;
+      text-align: left;
+      font-size: 18px;
+      margin-left: 8px;
+    }
+
+    .loading-dots span {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin: 0 2px;
+      background: #555;
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: blink 1.4s infinite both;
+    }
+
+    .loading-dots span:nth-child(1) {
+      animation-delay: 0s;
+    }
+    .loading-dots span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    .loading-dots span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes blink {
+      0%, 80%, 100% { opacity: 0.3; }
+      40% { opacity: 1; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <!-- <h1>Hello</h1> -->
+    <!-- Messages section -->
+    <div class="messages" id="messages">
+      {% if history %}
+        {% for item in history %}
+          <div class="bubble {{ item.role }}">
+            {% if item.role == "user" %}
+              {{ item.text }}
+            {% else %}
+              {{ item.text|safe }}
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% else %}
+        <p style="color:#888;">Start chatting below 👇</p>
+      {% endif %}
+    
+      <!-- ⭐ Loading indicator (hidden by default) -->
+      <div id="loading" class="bubble bot" style="display: none;">
+        <span class="loading-dots">
+          <span></span><span></span><span></span>
+        </span>
+      </div>
+    </div>
+    
+
+    <!-- Input always sticks to bottom -->
+    <form class="input-box" method="post">
+      {% csrf_token %}
+      {{ form.query }}
+      <button type="submit">Send</button>
+    </form>
+  </div>
+  <script>
+  const form = document.querySelector(".input-box");
+  const loadingDiv = document.getElementById("loading");
+  const messagesDiv = document.getElementById("messages");
+  
+  form.addEventListener("submit", function() {
+    // Show loading dots when form is submitted
+    loadingDiv.style.display = "block";
+  });
+
+  // When page reloads after reply, hide loader
+  window.addEventListener("load", function() {
+    loadingDiv.style.display = "none";
+    messagesDiv.scrollTop = messagesDiv.scrollHeight
+  });
+</script>
+
+</body>
+</html>
