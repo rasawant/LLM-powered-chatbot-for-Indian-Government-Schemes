@@ -8,8 +8,8 @@ from pinecone import Pinecone
 import tiktoken
 
 # ------------------------------ Config ------------------------------
-PINECONE_KEY = 'pcsk_E4cUN_2MHd1oUx2Bvz7yTh1WiMnteu4Z8Mj2i3hraZ4yTKpuFv3fuikisrwXtX9sVaf1U'
-PINECONE_HOST = "https://developer-quickstart-py-02jjq2u.svc.aped-4627-b74a.pinecone.io"
+PINECONE_KEY = ''
+PINECONE_HOST = ""
 
 pc = Pinecone(api_key=PINECONE_KEY)
 index = pc.Index("developer-quickstart-py")
